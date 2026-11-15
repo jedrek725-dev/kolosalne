@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install GCC 14 and Valgrind
+        run: sudo apt-get update && sudo apt-get install -y gcc-14 valgrind
+      - name: Build with the course's exact flags
+        run: make CC=gcc-14
+      - name: Run tests under Valgrind
+        run: make test
